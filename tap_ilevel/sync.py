@@ -439,7 +439,7 @@ def __process_periodic_data_calcs(req_state, scenario_name='Actual', currency_co
             for entity in entity_objs:
                 entity_dict = ilevel.sobject_to_dict(entity)
                 entity_id = entity_dict.get('Id')
-                LOGGER.info('entity = {} ({})'.format(entity_name, entity_id)) # COMMENT OUT
+                LOGGER.info('entity = {} ({})'.format(entity, entity_id)) # COMMENT OUT
                 entity_initial_dttm = datetime.strptime(entity_dict.get('InitialPeriod')[:10], '%Y-%m-%d')
                 start_dttm = datetime.strptime(req_state.last_date, '%Y-%m-%d')
                 max_dttm = [start_dttm, entity_initial_dttm]
@@ -447,7 +447,7 @@ def __process_periodic_data_calcs(req_state, scenario_name='Actual', currency_co
                 start_dttm = max(i for i in max_dttm if i is not None)
 
                 LOGGER.info('periodic_data_calculated: {}, {}: {} ({})'.format(
-                     data_item_name, entity_type, entity_name, entity_id)) # COMMENT OUT
+                     data_item_name, entity_type, entity, entity_id)) # COMMENT OUT
                 entity_path = ilevel.create_entity_path(req_state, [entity_id])
 
                 # period_type loop
