@@ -439,15 +439,15 @@ def __process_periodic_data_calcs(req_state, scenario_name='Actual', currency_co
             for entity in entity_objs:
                 entity_dict = ilevel.sobject_to_dict(entity)
                 entity_id = entity_dict.get('Id')
-                LOGGER.info('entity = {} ({})'.format(entity, entity_id)) # COMMENT OUT
+                # LOGGER.info('entity = {} ({})'.format(entity_name, entity_id)) # COMMENT OUT
                 entity_initial_dttm = datetime.strptime(entity_dict.get('InitialPeriod')[:10], '%Y-%m-%d')
                 start_dttm = datetime.strptime(req_state.last_date, '%Y-%m-%d')
                 max_dttm = [start_dttm, entity_initial_dttm]
                 # Choose the earliest date for which there is data for an entity
                 start_dttm = max(i for i in max_dttm if i is not None)
 
-                LOGGER.info('periodic_data_calculated: {}, {}: {} ({})'.format(
-                     data_item_name, entity_type, entity, entity_id)) # COMMENT OUT
+                # LOGGER.info('periodic_data_calculated: {}, {}: {} ({})'.format(
+                #     data_item_name, entity_type, entity_name, entity_id)) # COMMENT OUT
                 entity_path = ilevel.create_entity_path(req_state, [entity_id])
 
                 # period_type loop
@@ -458,8 +458,8 @@ def __process_periodic_data_calcs(req_state, scenario_name='Actual', currency_co
                     # offset_period loop (0, -1, -2, ...) look-back
                     pd = 0
                     while pd <=  period_diff + 1:
-                        LOGGER.info('{}: periodic_data_calculated: {}, Period Type: {}, Offset: {}'.format(
-                            req_id, data_item_name, period_type, -pd)) # COMMENT OUT
+                        # LOGGER.info('{}: periodic_data_calculated: {}, Period Type: {}, Offset: {}'.format(
+                        #    req_id, data_item_name, period_type, -pd)) # COMMENT OUT
                         offset_period = copy.copy(period)
                         offset_period.IsOffset = True
                         offset_period.Quantity = int(-1 * pd)
@@ -477,7 +477,7 @@ def __process_periodic_data_calcs(req_state, scenario_name='Actual', currency_co
                         i_get_params.CurrencyCode = currency_code
 
                         i_get_params_list.BaseRequestParameters.append(i_get_params)
-                        LOGGER.info('i_get_params = {}'.format(i_get_params)) # COMMENT OUT
+                        # LOGGER.info('i_get_params = {}'.format(i_get_params)) # COMMENT OUT
 
                         # run iGetBatch
                         end_of_batches = False
@@ -492,7 +492,7 @@ def __process_periodic_data_calcs(req_state, scenario_name='Actual', currency_co
                             i_get_request.IncludeStandardizedDataInfo = True
                             i_get_request.IncludeExcelFormula = True
                             i_get_request.ParametersList = i_get_params_list
-                            LOGGER.info('i_get_request = {}'.format(i_get_request)) # COMMENT OUT
+                            # LOGGER.info('i_get_request = {}'.format(i_get_request)) # COMMENT OUT
 
                             # pylint: disable=unused-variable
                             metrics_string = ('periodic_data_calculated, iGetBatch #{}: {} requests'.format(
